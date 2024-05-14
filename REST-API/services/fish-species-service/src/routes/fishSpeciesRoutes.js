@@ -1,9 +1,5 @@
-// Import dependencies
-// import express from 'express';
-// import { getAll, getById, create, update, remove } from './controllers/fishSpeciesController'
-
 const express = require("express");
-const { getAll, getById, create, update, remove } = require("../controllers/fishSpeciesController");
+const { getAll, getById, getFishwithRecipes, create, update, remove } = require("../controllers/fishSpeciesController");
 
 // Create router instance
 const router = express.Router();
@@ -13,6 +9,9 @@ router.get('/', getAll);
 
 // Route to get a single fish species by ID
 router.get('/:id', getById);
+
+// Route to get fish with its recipes
+router.get('/recipe/:fishId', getFishwithRecipes);
 
 // Route to create a new fish species
 router.post('/', create);

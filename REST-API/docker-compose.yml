@@ -1,0 +1,15 @@
+version: '3'
+services:
+  fish-species-service:
+    image: fish-species-service
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+
+  fish-recipe-service:
+    image: fish-recipe-service
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production

@@ -1,6 +1,8 @@
 const fs = require("fs");
 const path = require("path");
+const axios = require("axios")
 
+const baseURL = process.env.NODE_ENV === "production" ? "http://fish-recipe-service:3001" : "http://localhost:3001";
 const fishSpeciesFilePath = path.resolve(__dirname, "../models/fishSpeciesData.json");
 
 // Read data from JSON file
@@ -25,7 +27,7 @@ const getById = (req, res) => {
         // Find the fish species with the specified ID
         const fishSpecies = fishSpeciesData.find(fish => fish.id === id);
         if (!fishSpecies) {
-            return res.status(404).json({ error: 'Fish Species not found' })
+            return res.status(404).json({ error: "Fish Species not found" })
         }
         // Return the found fish species
         return res.status(200).json(fishSpecies);
@@ -35,6 +37,30 @@ const getById = (req, res) => {
         return res.status(500).json({ error: "Internal server error" });
     } 
 };
+
+const getFishwithRecipes = async (req, res) => {
+    try {
+        const fishId = parseInt(req.params.fishId);
+        const fishSpecies = fishSpeciesData.find(fish => fish.id === fishId);
+        if (!fishSpecies) {
+            return res.status(404).json({ error: "Fish species not found"});
+        }
+
+        // Fetch recipes using the fishId as the recipe identifier
+        const recipeResponse = await axios.get(`${baseURL}/fish-recipe/fish/${fishId}`);
+        
+        // Extract only the "recipe" field from each recipe object
+        const recipes = recipeResponse.data.map(recipe => recipe.recipe);
+
+        // Add recipes to the fish species object
+        fishSpecies.recipes = recipes;
+
+        res.status(200).json(fishSpecies);
+    } catch (error) {
+        console.error("Error fetching fish with recipes:", error);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+}
 
 // Controller function to create a new fish species
 const create = (req, res) => {
@@ -99,6 +125,7 @@ const remove = (req, res) => {
 module.exports = {
     getAll,
     getById,
+    getFishwithRecipes,
     create,
     update,
     remove

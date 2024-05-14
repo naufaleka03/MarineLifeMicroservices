@@ -1,7 +1,3 @@
-// import express from "express";
-// import bodyParser from "body-parser";
-// import fishSpeciesRoutes from "./src/routes/fishSpeciesRoutes";
-
 const express = require("express");
 const bodyParser = require("body-parser")
 const fishSpeciesRoutes = require("./src/routes/fishSpeciesRoutes")

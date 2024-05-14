@@ -1,5 +1,5 @@
 {
-  "name": "fish-species-service",
+  "name": "recipe-service",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -11,6 +11,8 @@
   "description": "",
   "dependencies": {
     "axios": "^1.6.8",
-    "express": "^4.19.2"
+    "body-parser": "^1.20.2",
+    "express": "^4.19.2",
+    "fs": "^0.0.1-security"
   }
 }
