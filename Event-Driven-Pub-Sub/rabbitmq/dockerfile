@@ -1,0 +1,11 @@
+# Use the official RabbitMQ image from Docker Hub
+FROM rabbitmq:3-management
+
+# Expose the RabbitMQ ports
+EXPOSE 5672 15672
+
+# Set any custom configurations if needed
+# COPY rabbitmq.conf /etc/rabbitmq/
+
+# Start RabbitMQ server when the container starts
+CMD ["rabbitmq-server"]
